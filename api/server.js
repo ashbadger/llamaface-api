@@ -2,9 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 require('./config/config')
 
-const {mongoose} = require('./db/mongoose');
-const {ObjectID} = require('mongodb');
-const {Llama} = require('./models/llama');
+const { mongoose } = require('./db/mongoose');
+const { ObjectID } = require('mongodb');
+const { Llama } = require('./models/llama');
 
 
 var app = express();
@@ -41,7 +41,7 @@ app.delete('/llamas/:id', (req, res) => {
 
     Llama.findByIdAndRemove(id).then((llama) => {
         if (!llama) {
-            return res.status(404).send(err);
+            return res.status(404).send();
         }
         res.send({llama});
     }).catch((e) => res.status(400).send());
