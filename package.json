@@ -2,7 +2,7 @@
   "name": "llamaface",
   "version": "1.0.0",
   "description": "llamas",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node api/server.js",
     "test": "export NODE_ENV=\"test\" && mocha api/**/*.test.js"

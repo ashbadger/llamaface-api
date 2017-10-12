@@ -19,6 +19,18 @@ app.get('/llamas', (req, res) => {
     }, (err) => res.status(404).send(e))
 })
 
+app.get('/llamas/:id', (req, res) => {
+    var id = req.params.id;
+
+    if(!ObjectID.isValid(id)){
+        return res.status(404).send()
+    }
+
+    Llama.findById(id).then((llama) => {
+        res.send({llamas});
+    }, (err) => res.status(404).send(e))
+})
+
 app.post('/llamas', (req, res) => {
     var llama = new Llama({
         name: req.body.name, 
