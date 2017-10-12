@@ -27,7 +27,7 @@ app.get('/llamas/:id', (req, res) => {
     }
 
     Llama.findById(id).then((llama) => {
-        res.send({llamas});
+        res.send({llama});
     }, (err) => res.status(404).send(e))
 })
 
