@@ -73,6 +73,20 @@ describe('POST /llama', () => {
     });
 })
 
+describe('GET /llamas/:id', () => {
+    it('should get a llama with specified id', (done) => {
+        var id = llamas[0]._id.toHexString()
+
+        request(app)
+        .get(`/llamas/${id}`)
+        .expect(200)
+        .expect((res) => {
+            expect(res.body.llama._id).toBe(id)
+        })
+        .end(done)
+    })
+})
+
 describe('DELETE /llamas/:id', () => {
     it('should delete a llama', (done) => {
         var id = llamas[0]._id.toHexString()
