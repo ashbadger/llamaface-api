@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "expect": "^1.20.2",
     "express": "^4.15.3",
     "mocha": "^3.5.3",
