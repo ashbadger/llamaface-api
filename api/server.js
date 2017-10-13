@@ -15,7 +15,9 @@ app.use(bodyParser.json());
 
 app.get('/llamas', (req, res) => {
     Llama.find({}).then((llamas) => {
-        res.send({llamas});
+        res
+        .send({llamas})
+        .setHeader('Access-Control-Allow-Origin','*');
     }, (err) => res.status(404).send(e))
 })
 
@@ -27,7 +29,9 @@ app.get('/llamas/:id', (req, res) => {
     }
 
     Llama.findById(id).then((llama) => {
-        res.send({llama});
+        res
+        .send({llama})
+        .setHeader('Access-Control-Allow-Origin','*');
     }, (err) => res.status(404).send(e))
 })
 
