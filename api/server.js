@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+var cors = require('cors')
+
 require('./config/config')
 
 const { mongoose } = require('./db/mongoose');
@@ -10,14 +12,13 @@ const { Llama } = require('./models/llama');
 var app = express();
 const port = process.env.PORT;
 
+app.use(cors());
 app.use(bodyParser.json());
 
 
 app.get('/llamas', (req, res) => {
     Llama.find({}).then((llamas) => {
-        res
-        .send({llamas})
-        .setHeader('Access-Control-Allow-Origin','*');
+        res.send({llamas});
     }, (err) => res.status(404).send(e))
 })
 
@@ -29,9 +30,7 @@ app.get('/llamas/:id', (req, res) => {
     }
 
     Llama.findById(id).then((llama) => {
-        res
-        .send({llama})
-        .setHeader('Access-Control-Allow-Origin','*');
+        res.send({llama});
     }, (err) => res.status(404).send(e))
 })
 
