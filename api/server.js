@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 app.get('/llamas', (req, res) => {
     Llama.find({}).then((llamas) => {
-        res.send({llamas});
+        res.send(llamas);
     }, (err) => res.status(404).send(e))
 })
 
