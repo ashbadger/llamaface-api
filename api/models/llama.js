@@ -9,7 +9,7 @@ exports.Llama = mongoose.model('Llama', {
         type: Number,
         required: false
     }, 
-    picture: {
+    picture_url: {
         type: String,
         required: false
     },

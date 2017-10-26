@@ -37,7 +37,9 @@ app.get('/llamas/:id', (req, res) => {
 app.post('/llamas', (req, res) => {
     var llama = new Llama({
         name: req.body.name, 
-        age: req.body.age
+        age: req.body.age,
+        picture_url: req.body.picture_url,
+        description: req.body.description
     });
 
     llama.save().then((doc) => {
@@ -45,6 +47,21 @@ app.post('/llamas', (req, res) => {
     }, (e) => {
         res.status(400).send(e);
     });
+});
+
+app.patch('/llamas/:id', (req, res) => {
+    const id = req.params.id;
+    
+    if(!ObjectID.isValid(id)) {
+        res.status(404).send();
+    }
+
+    Llama.findByIdAndUpdate(id, req.body, {new: true}).then((llama) => {
+        if (!llama) {
+            return res.status(404).send();
+        }
+        res.send(llama);
+    }).catch((e) => res.status(400).send())
 });
 
 app.delete('/llamas/:id', (req, res) => {
@@ -58,7 +75,7 @@ app.delete('/llamas/:id', (req, res) => {
         if (!llama) {
             return res.status(404).send();
         }
-        res.send({llama});
+        res.send(llama);
     }).catch((e) => res.status(400).send());
 });
 
