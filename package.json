@@ -10,15 +10,23 @@
   "author": "ashnado",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^1.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "expect": "^1.20.2",
     "express": "^4.15.3",
+    "jsonwebtoken": "^8.1.0",
+    "lodash": "^4.17.4",
     "mocha": "^3.5.3",
     "mongodb": "^2.2.31",
     "mongoose": "^4.11.13",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.4.0",
     "query-string": "^5.0.0",
     "rxjs": "^5.4.3",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "validator": "^9.1.1"
   }
 }
