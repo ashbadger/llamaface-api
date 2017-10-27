@@ -16,6 +16,10 @@ exports.Llama = mongoose.model('Llama', {
     description: {
         type: String, 
         required: false
+    },
+    location: {
+        type: String,
+        required: false
     }
 });
 

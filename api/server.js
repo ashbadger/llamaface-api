@@ -39,7 +39,8 @@ app.post('/llamas', (req, res) => {
         name: req.body.name, 
         age: req.body.age,
         picture_url: req.body.picture_url,
-        description: req.body.description
+        description: req.body.description,
+        location: req.body.location
     });
 
     llama.save().then((doc) => {
