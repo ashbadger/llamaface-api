@@ -50,7 +50,7 @@ LlamaSchema.methods.toJSON = function () {
     var llama = this;
     var llamaObject = llama.toObject();
 
-    return _.pick(llamaObject, ['_id', 'email']);
+    return _.omit(llamaObject, ['tokens', 'password', '_v']);
 };
 
 LlamaSchema.methods.generateAuthToken = function () {
