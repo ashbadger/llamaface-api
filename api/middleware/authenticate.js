@@ -1,8 +1,6 @@
 var {Llama} = require('./../models/llama');
 
 var authenticate = (req, res, next) => {
-  console.log(req)
-  console.log(res)
   var token = req.header('x-auth');
 
   Llama.findByToken(token).then((llama) => {
@@ -17,4 +15,4 @@ var authenticate = (req, res, next) => {
   });
 };
 
-module.exports = {authenticate};
+module.exports = { authenticate };

@@ -16,7 +16,8 @@ let LlamaSchema = new mongoose.Schema({
     },
     name: {
         type: String, 
-        required: false
+        required: false,
+        index: true
     }, 
     age: {
         type: Number,
@@ -90,8 +91,8 @@ LlamaSchema.statics.findByToken = function (token) {
         '_id': decoded._id,
         'tokens.token': token,
         'tokens.access': 'auth'
-    })
-}
+    });
+};
 
 LlamaSchema.statics.findByCredentials = function (email, password) {
     var Llama = this;
@@ -131,6 +132,7 @@ LlamaSchema.pre('save', function (next) {
 });
 
 LlamaSchema.index({ "email" : 1}, { unique : true })
+LlamaSchema.index({ "name": "text"})
 
 let Llama = mongoose.model('Llama', LlamaSchema);
 

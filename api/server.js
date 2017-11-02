@@ -8,7 +8,7 @@ const cors = require('cors')
 const { mongoose } = require('./db/mongoose');
 const { ObjectID } = require('mongodb');
 const { Llama } = require('./models/llama');
-var {authenticate} = require('./middleware/authenticate');
+const { authenticate } = require('./middleware/authenticate');
 
 var app = express();
 const port = process.env.PORT;
@@ -20,6 +20,18 @@ app.get('/llamas', (req, res) => {
     Llama.find({}).then((llamas) => {
         res.send(llamas);
     }, (err) => res.status(404).send(e))
+})
+
+app.get('/search', (req, res) => {
+    var q = req.query.q
+    
+    Llama
+        .find({ $text : { $search: q } },
+            { score: { $meta: "textScore" } })
+        .sort({ score: { $meta: "textScore" } })
+        .then((llama) => {
+            res.send(llama);
+        }, (err) => res.status(404).send(err))    
 })
 
 app.get('/llamas/:id', (req, res) => {
@@ -49,23 +61,25 @@ app.post('/llamas', (req, res) => {
     });
 });
 
-app.get('/llamas/me', authenticate, (req, res) => {
-    res.send(req.llama);
-  });
+app.get('/me', authenticate, (req, res) => {
+    res.send(req.llama).catch((e) => {
+        res.status(400).send();
+    });
+});
   
 app.post('/llamas/login', (req, res) => {
     var body = _.pick(req.body, ['email', 'password']);
 
     Llama.findByCredentials(body.email, body.password).then((llama) => {
         return llama.generateAuthToken().then((token) => {
-            res.header('x-auth', token).send(llama);
+            res.header('x-auth', token).send({ token });
         });
     }).catch((e) => {
         res.status(400).send();
     });
 });
 
-app.delete('/llamas/me/token', authenticate, (req, res) => {
+app.delete('/me/token', authenticate, (req, res) => {
     req.llama.removeToken(req.token).then(() => {
         res.status(200).send();
     }, () => {
