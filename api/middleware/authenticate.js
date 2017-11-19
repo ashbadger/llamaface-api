@@ -1,4 +1,4 @@
-var {Llama} = require('./../models/llama');
+var { Llama } = require('../models/llamas');
 
 var authenticate = (req, res, next) => {
   var token = req.header('x-auth');
