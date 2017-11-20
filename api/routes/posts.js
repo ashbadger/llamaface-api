@@ -10,7 +10,7 @@ const { authenticate } = require('../middleware/authenticate');
 
 posts.route('/')
     .get((req, res) =>  {
-        Post.find({}).then((posts) => {
+        Post.find({}).sort({createdAt: 'desc'}).then((posts) => {
             res.send(posts);
         }, (err) => res.status(404).send(err))
     })
