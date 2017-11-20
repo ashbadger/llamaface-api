@@ -16,6 +16,8 @@ posts.route('/')
     })
     .post((req, res) => {
         var body = _.pick(req.body, ['text', 'user_id']);
+        body.createdAt = new Date().getTime();
+
         var post = new Post(body);
         
         post.save().then((post) => {

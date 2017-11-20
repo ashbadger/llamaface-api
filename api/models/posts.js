@@ -8,6 +8,9 @@ let PostSchema = new mongoose.Schema({
     text: {
         type: String,
         required: true
+    }, 
+    createdAt: {
+        type: Number
     }
 });
 
