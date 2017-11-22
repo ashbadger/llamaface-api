@@ -36,7 +36,7 @@ posts.route('/user/:id')
             return res.status(404).send()
         }
 
-        Post.find({user_id: id}).then((post) => {
+        Post.find({user_id: id}).sort({createdAt: 'desc'}).then((post) => {
             res.send(post);
         }, (err) => res.status(404).send(err))
     })
@@ -49,7 +49,7 @@ posts.route('/:id')
             return res.status(404).send()
         }
 
-        Post.findById(id).sort({createdAt: 'desc'}).then((post) => {
+        Post.findById(id).then((post) => {
             res.send(post);
         }, (err) => res.status(404).send(err))
     })
