@@ -49,7 +49,7 @@ posts.route('/:id')
             return res.status(404).send()
         }
 
-        Post.findById(id).then((post) => {
+        Post.findById(id).sort({createdAt: 'desc'}).then((post) => {
             res.send(post);
         }, (err) => res.status(404).send(err))
     })
