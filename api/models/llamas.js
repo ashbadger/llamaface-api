@@ -69,7 +69,7 @@ LlamaSchema.methods.generateAuthToken = function () {
 
 LlamaSchema.methods.removeToken = function (token) {
     var llama = this;
-  
+
     return llama.update({
       $pull: {
         tokens: {token}

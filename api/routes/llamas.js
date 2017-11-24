@@ -69,7 +69,7 @@ llamas.route('/login')
 llamas.route('/me/token')
     .delete(authenticate, (req, res) => {
         req.llama.removeToken(req.token).then(() => {
-            res.status(200).send();
+            res.status(200).send(req.token);
         }, (err) => {
             res.status(400).send(err);
         });
