@@ -11,6 +11,8 @@ var app = express();
 const port = process.env.PORT;
 
 app.use(cors());
+app.options("*", cors());
+
 app.use(bodyParser.json());
 
 app.use('/llamas', llamas);
