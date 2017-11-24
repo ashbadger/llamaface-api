@@ -10,8 +10,16 @@ const posts = require('./routes/posts')
 var app = express();
 const port = process.env.PORT;
 
-app.use(cors());
-app.options("*", cors());
+const options = {
+    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token", "x-auth"],
+    credentials: true,
+    methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+    origin: "*",
+    preflightContinue: false
+};
+
+app.use(cors(options));
+app.options("*", cors(options));
 
 app.use(bodyParser.json());
 
