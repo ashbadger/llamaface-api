@@ -36,8 +36,19 @@ posts.route('/user/:id')
             return res.status(404).send()
         }
 
-        Post.find({user_id: id}).sort({createdAt: 'desc'}).then((post) => {
-            res.send(post);
+        Post.find({user_id: id}).sort({createdAt: 'desc'}).then((posts) => {
+            res.send(posts);
+        }, (err) => res.status(404).send(err))
+    })
+    .delete((req, res) => {
+        var id = req.params.id;
+        
+        if(!ObjectID.isValid(id)){
+            return res.status(404).send()
+        }
+
+        Post.remove({user_id: id}).then((posts) => {
+            res.send(posts);
         }, (err) => res.status(404).send(err))
     })
 
