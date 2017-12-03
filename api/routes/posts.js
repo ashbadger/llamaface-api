@@ -40,7 +40,7 @@ posts.route('/user/:id')
             res.send(posts);
         }, (err) => res.status(404).send(err))
     })
-    .delete((req, res) => {
+    .delete(authenticate, (req, res) => {
         var id = req.params.id;
         
         if(!ObjectID.isValid(id)){
@@ -64,7 +64,7 @@ posts.route('/:id')
             res.send(post);
         }, (err) => res.status(404).send(err))
     })
-    .patch((req, res) => {
+    .patch(authenticate, (req, res) => {
         const id = req.params.id;
         
         if(!ObjectID.isValid(id)) {
@@ -78,7 +78,7 @@ posts.route('/:id')
             res.send(post);
         }).catch((err) => res.status(400).send(err))
     })
-    .delete((req, res) => {
+    .delete(authenticate, (req, res) => {
         const id = req.params.id;
         
         if(!ObjectID.isValid(id)) {
