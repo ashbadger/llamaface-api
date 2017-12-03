@@ -4,6 +4,7 @@ const { ObjectID } = require('mongodb');
 
 const { app } = require('../server');
 const { Llama } = require('../models/llamas');
+const { Post } = require('../models/posts');
 
 const _ = require('lodash');
 const jwt = require('jsonwebtoken')
@@ -37,6 +38,42 @@ const llamas = [
     }
 ]
 
+postOneId = new ObjectID()
+postTwoId = new ObjectID()
+
+
+const posts = [
+    {
+        _id: postOneId,
+        user_id: effeId, 
+        text: "Hey, what's going on?"
+    }, 
+    {
+        _id: postTwoId,
+        user_id: effeId, 
+        text: "Guess I'll join llamaFace too!",
+    },
+    {
+        user_id: zipId,
+        text: 'Going to the mall later. Anyone?'
+    },
+    {
+        user_id: zipId,
+        text: 'Going to the park later. Anyone?'
+    }
+]
+
+
+beforeEach((done) => {
+    Post.remove({}).then(() => {
+        let postOne = new Post(posts[0]).save();
+        let postTwo = new Post(posts[1]).save();
+
+        return Promise.all([postOne, postTwo])
+    }).then(() => done())
+});
+
+
 beforeEach((done) => {
     Llama.remove({}).then(() => {
         var llamaOne = new Llama(llamas[0]).save();
@@ -45,6 +82,10 @@ beforeEach((done) => {
         return Promise.all([llamaOne, llamaTwo])
     }).then(() => done())
 });
+
+afterEach((done) => {
+    Llama.remove({}).then(() => done())
+})
 
 describe('GET /llama', () => {
     it('should get all llamas', (done) => {
@@ -56,7 +97,7 @@ describe('GET /llama', () => {
         })
         .end(done)
     })
-})
+});
 
 describe('POST /llama', () => {
     it('should create new llama', (done) => {
@@ -236,5 +277,135 @@ describe('DELETE /llamas/me/token', () => {
             expect(res.body._id).toBe(id)
         })
         .end(done)
+    })
+})
+
+
+describe('GET /posts', () => {
+    it('should get all posts', (done) => {
+        request(app)
+        .get('/posts')
+        .expect(200)
+        .expect((res) => {
+            expect(res.body.length).toBe(2);
+        })
+        .end(done)
+    })
+})
+
+describe('POST /posts', () => {
+    it('should create new post', (done) => {
+        var postText = posts[2].text
+        var userId = posts[2].user_id.toHexString()
+
+        request(app)
+        .post('/posts')
+        .send(posts[2])
+        .expect(200)
+        .expect((res) => {
+            expect(res.body.text).toBe(postText)
+            expect(res.body.user_id).toBe(userId)
+        })
+        .end((err) => {
+            if (err) {
+                return done(err);
+            }
+
+            Post.findOne({user_id: userId}).then((post) => {
+                expect(post).toExist();
+                done();
+            })
+        });
+    })
+})
+    
+describe('GET /posts/user/:id', () => {
+    it('should get all posts for :id user', (done) => {
+        let llamaId = posts[0].user_id.toHexString()
+
+        request(app)
+        .get(`/posts/user/${llamaId}`)
+        .expect(200)
+        .expect((res) => {
+            expect(res.body.length).toBeGreaterThan(0)
+            expect(res.body[0].user_id).toBe(llamaId)
+        })
+        .end(done)
+    })
+})
+
+describe('DELETE /posts/user/:id', () => {
+    it('should delete all posts for :id user', (done) => {
+        let llamaId = posts[0].user_id.toHexString()
+        var token = llamas[0].tokens[0].token
+
+        request(app)
+        .delete(`/posts/user/${llamaId}`)
+        .set('x-auth', token)
+        .expect(200)
+        .expect((res) => {
+            expect(res.body.n).toBeGreaterThan(0)
+        })
+        .end(done)
+    })
+})
+
+describe('GET /posts/:id', () => {
+    it('should get post with :id', (done) => {
+        let postId = posts[0]._id.toHexString()
+        let llamaId = posts[0].user_id.toHexString()
+        var token = llamas[0].tokens[0].token
+
+        request(app)
+        .get(`/posts/${postId}`)
+        .expect(200)
+        .expect((res) => {
+            expect(res.body._id).toBe(postId)
+        })
+        .end(done)
+    })
+})
+
+describe('PATCH /posts/:id', () => {
+    it('should update post with :id', (done) => {
+        let postId = posts[0]._id.toHexString()
+        let llamaId = posts[0].user_id.toHexString()
+        var token = llamas[0].tokens[0].token
+        let patchText = {text: "heyo"}
+
+        request(app)
+        .patch(`/posts/${postId}`)
+        .send(patchText)
+        .set('x-auth', token)
+        .expect(200)
+        .expect((res) => {
+            expect(res.body.text).toBe(patchText.text)
+        })
+        .end(done)
+    })
+})
+
+describe('DELETE /posts/:id', () => {
+    it('should delete posts with :id', (done) => {
+        let postId = posts[0]._id.toHexString()
+        var token = llamas[0].tokens[0].token
+
+        request(app)
+        .delete(`/posts/${postId}`)
+        .set('x-auth', token)
+        .expect(200)
+        .expect((res) => {
+            expect(res.body._id).toBe(postId)
+        })
+        .end((err) => {
+            if (err) {
+                return done(err);
+            }
+
+            Post.findById(postId).then((post) => {
+                expect(post).toNotExist();
+                done();
+            })
+        })
     })
 })
