@@ -22,6 +22,7 @@ __routes__:
 **technologies**: node, express, mongoose, bcrypt, jwt, mocha, heroku.
 
 llamaFace api deployed on [heroku](https://llamaface-api.herokuapp.com/llamas)
+
 llamaFace front end deployed on [heroku](https://llamaface-ng2.herokuapp.com/posts)
 
 (heroku dyno takes 10 seconds or so to boot up. reload the page then.)
