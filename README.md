@@ -1,5 +1,7 @@
 ![logo](https://github.com/ashbadger/llamaface-ng2/blob/master/src/assets/images/logo.png?raw=true)
 
+[![Build Status](https://travis-ci.org/ashbadger/llamaface-api.svg?branch=master)](https://travis-ci.org/ashbadger/llamaface-api)
+
 llamaFace is f*cebook for llamas.
 
 this is a full stack project. frontend (angular 2) can be found here: [llamaface-ng2](https://github.com/ashbadger/llamaface-ng2)
@@ -19,7 +21,7 @@ __routes__:
 |/posts/user/:id| /GET, /DELETE|
 
 
-**technologies**: node, express, mongoose, bcrypt, jwt, mocha, heroku.
+**technologies**: node, express, mongoose, bcrypt, jwt, mocha, heroku, travis ci.
 
 llamaFace api deployed on [heroku](https://llamaface-api.herokuapp.com/llamas)
 
