@@ -4,7 +4,7 @@
 
 llamaFace is f*cebook for llamas.
 
-this is a full stack project. frontend (angular 2) can be found here: [llamaface-ng2](https://github.com/ashbadger/llamaface-ng2)
+this is a full stack project. front end (angular 2) project can be found here: [llamaface-ng2](https://github.com/ashbadger/llamaface-ng2)
 
 __routes__: 
 
@@ -25,6 +25,6 @@ __routes__:
 
 llamaFace api deployed on [heroku](https://llamaface-api.herokuapp.com/llamas)
 
-llamaFace front end deployed on [heroku](https://llamaface-ng2.herokuapp.com/posts)
+llamaFace front end deployed on [s3](http://llamaface-ng2.s3-website-us-east-1.amazonaws.com/posts)
 
 (heroku dyno takes 10 seconds or so to boot up. reload the page then.)
