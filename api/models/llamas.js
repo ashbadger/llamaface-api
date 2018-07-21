@@ -60,7 +60,7 @@ LlamaSchema.methods.generateAuthToken = function () {
 
     var token = jwt.sign({_id: llama._id.toHexString(), access}, process.env.JWT_SECRET).toString();
 
-    llama.tokens.push({access, token})
+    llama.tokens.push({ access, token });
 
     return llama.save().then(() => {
         return token;
@@ -72,7 +72,7 @@ LlamaSchema.methods.removeToken = function (token) {
 
     return llama.update({
       $pull: {
-        tokens: {token}
+        tokens: { token }
       }
     });
   };
@@ -131,9 +131,9 @@ LlamaSchema.pre('save', function (next) {
     }
 });
 
-LlamaSchema.index({ "email" : 1}, { unique : true })
-LlamaSchema.index({ "name": "text"})
+LlamaSchema.index({ "email" : 1 }, { unique : true });
+LlamaSchema.index({ "name": "text" });
 
 let Llama = mongoose.model('Llama', LlamaSchema);
 
-module.exports = { Llama }
+module.exports = { Llama };
