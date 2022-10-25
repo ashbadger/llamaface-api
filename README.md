@@ -22,7 +22,3 @@ __routes__:
 
 
 **technologies**: node, express, mongoose, bcrypt, jwt, mocha, heroku, travis ci.
-
-llamaFace api deployed on [heroku](https://llamaface-api.herokuapp.com/llamas). llamaFace front end deployed on [s3](http://llamaface-ng2.s3-website-us-east-1.amazonaws.com/posts).
-
-**note**: after 30 minutes of inactivity, the heroku dyno falls asleep. it takes 10 or so seconds to boot up, so there might be a slight delay in your initial request.
